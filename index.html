@@ -80,8 +80,6 @@ body {
 </style>
 
 <script>
-
-function getAllUSers(){
   var ajax = new XMLHttpRequest();
   ajax.open("GET", "getAllUsers.php", true);
   ajax.send();
@@ -101,7 +99,30 @@ function getAllUSers(){
       document.getElementById("data").innerHTML = html;
     }
   }
+
+    function getUserByInput(){
+      var str = document.getElementById("searchInput").value;
+      var ajax2 = new XMLHttpRequest();
+      ajax2.open("GET", "getFilteredUsers.php?str=" + str, true);
+      ajax2.send();
+
+      ajax2.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+          var data = JSON.parse(this.responseText);
+
+var html = "";
+for(var a = 0; a < data.length; a++){
+  var firstName = data[a].fname;
+  var lastName = data[a].lname;
+  html += "<tr>";
+  html += "<td>" + firstName + "</td>";
+  html += "</tr>";
 }
+document.getElementById("data").innerHTML = html;
+        }
+      }
+
+    }
 </script>
 
 </head>
@@ -112,7 +133,8 @@ function getAllUSers(){
   <a href="#about">About</a>
   <a href="#contact">Contact</a>
   <div class="search-container">
-      <button type="submit" onclick="getAllUSers()">Submit</button>
+    Sadržaj: <input id="searchInput" type="text">
+      <button type="submit" onclick="getUserByInput()">Submit</button>
   </div>
 </div>
 
