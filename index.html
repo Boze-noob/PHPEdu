@@ -78,51 +78,52 @@ body {
   }
 }
 </style>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script>
-  var ajax = new XMLHttpRequest();
-  ajax.open("GET", "getAllUsers.php", true);
-  ajax.send();
-
-  ajax.onreadystatechange = function(){
-    if(this.readyState == 4 && this.status == 200){
-      var data = JSON.parse(this.responseText);
-
-      var html = "";
-      for(var a = 0; a < data.length; a++){
-        var firstName = data[a].fname;
-        var lastName = data[a].lname;
+$(document).ready(function(){
+  $.ajax({
+url:"getAllUsers.php",
+method: "GET",
+success: function(data){
+  var jQueryData = JSON.parse(data);
+  var html = "";
+      for(var a = 0; a < jQueryData.length; a++){
+        console.log('Usli smo u for petlju');
+        var firstName = jQueryData[a].fname;
         html += "<tr>";
         html += "<td>" + firstName + "</td>";
         html += "</tr>";
       }
-      document.getElementById("data").innerHTML = html;
-    }
-  }
-
-    function getUserByInput(){
-      var str = document.getElementById("searchInput").value;
-      var ajax2 = new XMLHttpRequest();
-      ajax2.open("GET", "getFilteredUsers.php?str=" + str, true);
-      ajax2.send();
-
-      ajax2.onreadystatechange = function(){
-        if(this.readyState == 4 && this.status == 200){
-          var data = JSON.parse(this.responseText);
-
-var html = "";
-for(var a = 0; a < data.length; a++){
-  var firstName = data[a].fname;
-  var lastName = data[a].lname;
-  html += "<tr>";
-  html += "<td>" + firstName + "</td>";
-  html += "</tr>";
+      $('#data').html(html);
 }
-document.getElementById("data").innerHTML = html;
-        }
-      }
+});
+});
 
+function getSpecificUser(str){
+  var str = $('#searchInput').val();
+
+  $.ajax({
+    url: "getFilteredUsers.php",
+    method: "GET",
+    data: {str: str},
+    success: function(data){
+      var jQueryData = JSON.parse(data);
+      console.log(jQueryData);
+      if(jQueryData.length !== 0){
+  var html = "";
+      for(var a = 0; a < jQueryData.length; a++){
+        var firstName = jQueryData[a].fname;
+        html += "<tr>";
+        html += "<td>" + firstName + "</td>";
+        html += "</tr>";
+      }
+      $('#data').html(html);
+      } else{
+        $('#data').html("Its empty");
+      }
     }
+  });
+}
 </script>
 
 </head>
@@ -134,7 +135,7 @@ document.getElementById("data").innerHTML = html;
   <a href="#contact">Contact</a>
   <div class="search-container">
     Sadržaj: <input id="searchInput" type="text">
-      <button type="submit" onclick="getUserByInput()">Submit</button>
+      <button type="submit" onclick="getSpecificUser()">Submit</button>
   </div>
 </div>
 
