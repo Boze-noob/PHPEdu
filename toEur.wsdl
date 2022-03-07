@@ -1,0 +1,45 @@
+<definitions>
+
+  <types>
+        <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:Test">
+            <xsd:element name="dataType" type="xsd:integer" />
+            <xsd:element name="getResponseValue" type="xsd:string" />
+        </xsd:schema>
+    </types>
+
+<message name="requestValueBTE">
+  <part name="requestValue" type="xs:string"/>
+</message>
+
+<message name="getResponseValueBTE">
+  <part name="responseValue" type="xs:string"/>
+</message>
+
+<portType name="currencyConverterPort">
+  <operation name="getValue">
+    <input message="requestValueBTE"/>
+    <output message="getResponseValueBTE"/>
+  </operation>
+</portType>
+
+<binding type="currencyConverterPort" name="b1">
+   <soap:binding style="document"
+   transport="http://schemas.xmlsoap.org/soap/http" />
+   <operation>
+     <soap:operation soapAction="convertAction"/>
+     <input><soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+     <output><soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+  </operation>
+</binding>
+
+
+//Add location
+<service name="Service">
+<port name="currencyConverterPort" binding="b1">
+<soap:address location = ""/>
+
+</port>
+</service>
+
+
+</definitions>
