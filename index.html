@@ -7,23 +7,19 @@
 </head>
 <body>  
 
-  <!-- Koristit form umjesto ovog lakse je method = post, stavit idjeve  -->
-  <div>
-    Enter value: <input type="text" name="requestValue">
-  </div>
-  <div>
-    Response value: <input type="text" name="responseValue">
-  </div>
-  
-  Pick currency:
-  <input type="radio" name="currency"
-  value="bamToEuro">BAM to EURO 
-  <input type="radio" name="currency"
-  value="euroToBam">EURO to BAM
+  <form name="form" method="post" action="service.php">
+    <p><label for="value">Enter value:</label><br><input name="inputValue" type="text" id="inputValue" size="15"></p>
+    <label for="currency">Currency</label><br>
+    <select name="currency" id="currency">
+      <option value="toEur">Convert to EUR</option>
+      <option value="toBam">Convert to BAM</option>
+    </select>
 
-  <div>
-    <button type="button">Convert!</button>
-  </div>
+    <input type="submit" name="submit" value="Convert">
+
+    <!-- Ako bude potrebno-->
+    <p id = "convertResult"></p>
+    </form>
 
 </body>
 </html>

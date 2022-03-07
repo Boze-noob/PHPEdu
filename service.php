@@ -8,7 +8,7 @@ if (extension_loaded('soap')) {
         ini_set('soap.wsdl_cache_enabled', 0);
         ini_set('soap.wsdl_cache_ttl', 0);
 
-        $value = $_POST['value'];
+        $value = $_POST['inputValue'];
         if ($_POST['currency'] === "toEur") {
             $sClient = new SoapClient('toEur.wsdl',array(
                 'trace' => true,
