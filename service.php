@@ -13,15 +13,17 @@ if (extension_loaded('soap')) {
             $sClient = new SoapClient('toEur.wsdl',array(
                 'trace' => true,
                 'keep_alive' => true,
+                'soap_version' => SOAP_1_1,
                 'connection_timeout' => 5000,
                 'cache_wsdl' => WSDL_CACHE_NONE,
-                'compression'   => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP | SOAP_COMPRESSION_DEFLATE,
+                'compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP | SOAP_COMPRESSION_DEFLATE,
             ));
             $response = $sClient->BTE($value);
         } else {
             $sClient = new SoapClient('toBam.wsdl',array(
                 'trace' => true,
                 'keep_alive' => true,
+                'soap_version' => SOAP_1_1,
                 'connection_timeout' => 5000,
                 'cache_wsdl' => WSDL_CACHE_NONE,
                 'compression'   => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP | SOAP_COMPRESSION_DEFLATE,

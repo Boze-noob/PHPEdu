@@ -1,45 +1,40 @@
-<definitions>
+<definitions name="HelloWorld" targetNamespace="urn:HelloWorld" xmlns:tns="urn:HelloWorld"  xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/">
 
   <types>
         <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:Test">
             <xsd:element name="dataType" type="xsd:integer" />
-            <xsd:element name="getResponseValue" type="xsd:string" />
+            <xsd:element name="getResponseValueBTE" type="xsd:string" />
         </xsd:schema>
     </types>
 
-<message name="requestValueBTE">
-  <part name="requestValue" type="xs:string"/>
+<message name="BTE">
+  <part name="requestValue" type="tns:dataType"/>
 </message>
 
 <message name="getResponseValueBTE">
-  <part name="responseValue" type="xs:string"/>
+  <part name="responseValue" type="tns:dataType"/>
 </message>
 
 <portType name="currencyConverterPort">
-  <operation name="getValue">
-    <input message="requestValueBTE"/>
-    <output message="getResponseValueBTE"/>
+  <operation name="BTE">
+    <input message="tns:BTE"/>
+    <output message="tns:getResponseValueBTE"/>
   </operation>
 </portType>
 
-<binding type="currencyConverterPort" name="b1">
+<binding type="tns:currencyConverterPort" name="b1">
    <soap:binding style="document"
    transport="http://schemas.xmlsoap.org/soap/http" />
-   <operation>
+   <operation name = "BTE" >
      <soap:operation soapAction="convertAction"/>
      <input><soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
      <output><soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
   </operation>
 </binding>
 
-
-//Add location
 <service name="Service">
-<port name="currencyConverterPort" binding="b1">
-<soap:address location = ""/>
-
+<port name="currencyConverterPort" binding="tns:b1">
+<soap:address location = "http://myhost/eurToBamServer.php"/>
 </port>
 </service>
-
-
 </definitions>
