@@ -23,8 +23,6 @@
 </portType>
 
 <binding type="tns:currencyConverterPort" name="b1">
-   <soap:binding style="document"
-   transport="http://schemas.xmlsoap.org/soap/http" />
    <operation name = "BTE" >
      <soap:operation soapAction="convertAction"/>
      <input><soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
